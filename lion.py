@@ -1,11 +1,12 @@
 import re
 from collections import Counter
+from docx import Document
 
-#  Чтение текста 
-with open('lion.docx', 'r', encoding='utf-8') as f:
-    doc = f.read()
+#  Чтение текста из docx 
+document = Document('lion.docx')
+doc = '\n'.join(p.text for p in document.paragraphs)
 
-#  Статистика по словам ``
+# Статистика по словам
 words = re.findall(r"[А-Яа-яЁёA-Za-z]+(?:-[А-Яа-яЁёA-Za-z]+)*", doc)
 total_words = len(words)
 word_counts = Counter(words)
@@ -19,9 +20,9 @@ with open('word_statistics.txt', 'w', encoding='utf-8') as f:
         f.write(f'{word}\t{count}\t{percent:.2f}\n')
 
 print(f'Всего слов: {total_words}')
-print('Статистика по словам сохранена в word_statistics.txt')
+print('Статистика  word_statistics.txt') #статистика сохранена в txt файл
 
-#  Статистика по буквам
+# Статистика по буквам 
 letters = [ch.lower() for ch in doc if re.match(r'[А-Яа-яЁёA-Za-z]', ch)]
 letter_counts = Counter(letters)
 sorted_letters = sorted(letter_counts.items())
